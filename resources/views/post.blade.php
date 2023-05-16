@@ -8,12 +8,16 @@
         </h1>
 
         <p>
-            <a href="#">{{ $post->category->name }}</a>
+            <a href="/author/{{ $post->author->username }}" class="anchor">{{ $post->author->name }}</a> <a
+                href="/categories/{{ $post->category->slug }}">{{ $post->category->name }}</a>
         </p>
-        
+
+
         <div>
             {!! $post->body !!}
         </div>
     </article>
-    <a href="/">Go Back</a>
+    <a href="/">Go Home</a>
 </x-layout>
+
+<p></p>

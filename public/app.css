@@ -19,3 +19,10 @@ p{
 a{
     color: #c4c6f1;
 }
+
+.anchor{
+    color: #3dc4fe;
+    text-decoration: none;
+    font-size: 1.1rem;
+    margin-right: 13px;
+}
