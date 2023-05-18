@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('slug')->unique();
             $table->timestamps();
         });
@@ -27,3 +27,6 @@ return new class extends Migration
         Schema::dropIfExists('categories');
     }
 };
+
+
+// HERE I REMOVES THE ->UNIQUE FROM THE $TABLE-STRING('NAME') FOUND INSIDE THE SCHEMA TABLE
