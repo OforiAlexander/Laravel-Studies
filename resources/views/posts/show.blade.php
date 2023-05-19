@@ -50,6 +50,41 @@
 
                     </div>
                 </div>
+
+                {{-- comment section for the blog --}}
+
+                <section class="col-span-9 col-start-5 mt-10 space-y-6" >
+
+
+                    <form action="/posts/{{ $post->slug }}/comments" method="post" class="p-6 rounded-xl border border-gray-200">
+                        @csrf
+
+                        <header class="flex items-center">
+                            <img src="https://i.pravatar.cc/40?u={{ auth()->id() }}" height="40" width="40"
+                                class="rounded-xl">
+
+                            <h2 class="ml-3">Leave A Comment</h2>
+                        </header>
+
+
+                        <div class="mt-5">
+                            <textarea name="body" class="w-full border border-gray-200 text-sm focus:outline-none focus:ring" 
+                                rows="5" placeholder="Leave A Comment" required></textarea>
+
+                                @error('body')
+                                    <span class="text-xs text-red-500">{{ $message }}</span>
+                                @enderror
+                        </div>
+
+                        <div class="flex justify-end mt-3">
+                           <x-submit-button > Comment </x-submit-button>
+                        </div>
+                    </form>
+
+                    @foreach ($post->comments as $comment)
+                        <x-post-comment :comment="$comment" />
+                    @endforeach
+                </section>
             </article>
         </main>
     </section>

@@ -39,6 +39,15 @@ class Post extends Model
         );
     }
 
+    /*
+    this is the side for the comment directory
+    */
+    
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);

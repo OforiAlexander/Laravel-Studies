@@ -13,19 +13,21 @@ class SessionController extends Controller
         return view('sessions.create');
     }
 
-    public function store(){
-      $attributes =  request()->validate([
-            'email'=>'required|email',
-            'password'=>'required'
+    public function store()
+    {
+        $attributes =  request()->validate([
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
 
-        if(auth()->attempt($attributes)){
-
-            return redirect('/')-> with('success', 'Welcome Back ');
+        if (!auth()->attempt($attributes)) {
+            throw ValidationException::withMessages([
+                'email' => 'Invalid email address provided. Please try again.'
+            ]);
         };
-        throw ValidationException::withMessages([
-            'email'=> 'Invalid email address provided. Please try again.'
-        ]);
+        session()->regenerate();
+        return redirect('/')->with('success', 'Welcome Back ');
+
 
         // return back()
         // ->withInput()
