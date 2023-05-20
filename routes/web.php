@@ -1,23 +1,13 @@
 <?php
 
-use App\Http\Controllers\PostCommentsController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\SessionController;
+use App\Http\Controllers\NewsletterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\PostCommentsController;
 
-
-Route::get('ping', function () {
-    $mailchimp = new \MailchimpMarketing\ApiClient();
-
-    $mailchimp->setConfig([
-        'apiKey' => config('services.mailchimp.key'),
-        'server' => 'us9'
-    ]);
-
-    $response = $mailchimp->lists->getAllLists();
-    dd($response);
-});
+Route::post('newsletter', NewsletterController::class);
 
 Route::get('/', [PostController::class, 'index'])->name('name');
 Route::get('post/{post:slug}', [PostController::class, 'show']);

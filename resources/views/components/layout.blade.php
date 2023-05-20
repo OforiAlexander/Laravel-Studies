@@ -8,7 +8,7 @@
 
 <body style="font-family: Open Sans, sans-serif">
     <style>
-        html{
+        html {
             scroll-behavior: smooth;
         }
     </style>
@@ -25,7 +25,8 @@
                 @auth
                     <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</span>
 
-                    <form action="/logout" method="post" class="text-xs font-bold uppercase text-red-600 hover:text-blue-500 ml-4">
+                    <form action="/logout" method="post"
+                        class="text-xs font-bold uppercase text-red-600 hover:text-blue-500 ml-4">
                         @csrf
 
                         <button>Log Out</button>
@@ -33,7 +34,8 @@
                     </form>
                 @else
                     <a href="/register" class="text-xs font-bold uppercase hover:text-blue-500">Register</a>
-                    <a href="/login" class=" ml-6 text-xs font-bold text-white bg-blue-500 rounded-xl py-2 px-4 uppercase hover:bg-blue-400">Login</a>
+                    <a href="/login"
+                        class=" ml-6 text-xs font-bold text-white bg-blue-500 rounded-xl py-2 px-4 uppercase hover:bg-blue-400">Login</a>
                 @endauth
 
 
@@ -48,7 +50,8 @@
 
         {{ $slot }}
 
-        <footer id="newsletter" class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
+        <footer id="newsletter"
+            class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
             <img src="/images/lary-newsletter-icon.svg" alt="" class="mx-auto -mb-6" style="width: 145px;">
             <h5 class="text-3xl">Stay in touch with the latest posts</h5>
             <p class="text-sm mt-3">Promise to keep the inbox clean. No bugs.</p>
@@ -56,14 +59,22 @@
             <div class="mt-10">
                 <div class="relative inline-block mx-auto lg:bg-gray-200 rounded-full">
 
-                    <form method="POST" action="#" class="lg:flex text-sm">
+                    <form method="POST" action="/newsletter" class="lg:flex text-sm w-full">
+                        @csrf
+
                         <div class="lg:py-3 lg:px-5 flex items-center">
                             <label for="email" class="hidden lg:inline-block">
                                 <img src="/images/mailbox-icon.svg" alt="mailbox letter">
                             </label>
+                            {{-- error for the newslatter --}}
+                            <div>
+                                <input id="email" type="text" placeholder="Your email address" name="email"
+                                    class="lg:bg-transparent py-2 lg:py-0 pl-4 focus-within:outline-none">
+                            @error('email')
+                                <span class="text-xs text-red-500 mt-6">{{ $message }}</span>
+                            @enderror
+                            </div>
 
-                            <input id="email" type="text" placeholder="Your email address"
-                                class="lg:bg-transparent py-2 lg:py-0 pl-4 focus-within:outline-none">
                         </div>
 
                         <button type="submit"
