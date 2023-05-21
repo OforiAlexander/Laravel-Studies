@@ -4,7 +4,7 @@
         <main class="max-w-6xl mx-auto mt-10 lg:mt-20 space-y-6">
             <article class="max-w-4xl mx-auto lg:grid lg:grid-cols-12 gap-x-10">
                 <div class="col-span-4 lg:text-center lg:pt-14 mb-10">
-                    <img src="/images/illustration-1.png" alt="" class="rounded-xl">
+                    <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="" class="rounded-xl">
 
                     <p class="mt-4 block text-gray-400 text-xs">
                         Published <time>{{ $post->created_at->diffForHumans() }}</time>
@@ -53,10 +53,11 @@
 
                 {{-- comment section for the blog --}}
 
-                <section class="col-span-9 col-start-5 mt-10 space-y-6" >
+                <section class="col-span-9 col-start-5 mt-10 space-y-6">
 
 
-                    <form action="/posts/{{ $post->slug }}/comments" method="post" class="p-6 rounded-xl border border-gray-200">
+                    <form action="/posts/{{ $post->slug }}/comments" method="post"
+                        class="p-6 rounded-xl border border-gray-200">
                         @csrf
 
                         <header class="flex items-center">
@@ -67,17 +68,15 @@
                         </header>
 
 
-                        <div class="mt-5">
-                            <textarea name="body" class="w-full border border-gray-200 text-sm focus:outline-none focus:ring" 
-                                rows="5" placeholder="Leave A Comment" required></textarea>
+                       <x-form.field >
+                            <textarea name="body" class="w-full border border-gray-200 text-sm focus:outline-none focus:ring" rows="5"
+                                placeholder="Leave A Comment" required></textarea>
 
-                                @error('body')
-                                    <span class="text-xs text-red-500">{{ $message }}</span>
-                                @enderror
-                        </div>
+                            <x-form.error name="name"/>
+                       </x-form.field>
 
                         <div class="flex justify-end mt-3">
-                           <x-submit-button > Comment </x-submit-button>
+                            <x-form.button> Comment </x-form.button>
                         </div>
                     </form>
 
