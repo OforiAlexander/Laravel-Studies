@@ -23,15 +23,18 @@
             <div class="mt-8 md:mt-0 flex items-center ">
 
                 @auth
-                    <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</span>
+                    <x-dropdown>
+                        <x-slot name="trigger">
+                            <button class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</button>
+                        </x-slot>
+                        <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">Dashboard</x-dropdown-item>
+                        <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
+                        <x-dropdown-item href="#" x-data="{}" @click.prevent="document.querySelector('#logout-form').submit()">Log Out</x-dropdown-item>
 
-                    <form action="/logout" method="post"
-                        class="text-xs font-bold uppercase text-red-600 hover:text-blue-500 ml-4">
-                        @csrf
-
-                        <button>Log Out</button>
-
-                    </form>
+                        <form action="/logout" method="post" class="hidden" id="logout-form">
+                            @csrf
+                        </form>
+                    </x-dropdown>
                 @else
                     <a href="/register" class="text-xs font-bold uppercase hover:text-blue-500">Register</a>
                     <a href="/login"
@@ -70,9 +73,9 @@
                             <div>
                                 <input id="email" type="text" placeholder="Your email address" name="email"
                                     class="lg:bg-transparent py-2 lg:py-0 pl-4 focus-within:outline-none">
-                            @error('email')
-                                <span class="text-xs text-red-500 mt-6">{{ $message }}</span>
-                            @enderror
+                                @error('email')
+                                    <span class="text-xs text-red-500 mt-6">{{ $message }}</span>
+                                @enderror
                             </div>
 
                         </div>
