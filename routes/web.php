@@ -23,9 +23,13 @@ Route::post('sessions', [SessionController::class, 'store'])->middleware('guest'
 
 Route::post('logout', [SessionController::class, 'destory'])->middleware('auth');
 
-Route::get('admin/posts/create',[PostController::class, 'create'])->middleware('admin');
-Route::get('admin/posts',[AdminPostController::class, 'index'])->middleware('admin');
-Route::post('admin/posts',[PostController::class, 'store'])->middleware('admin');
-Route::get('admin/posts/{post}/edit',[AdminPostController::class, 'edit'])->middleware('admin');
-Route::patch('admin/posts/{post}',[AdminPostController::class, 'update'])->middleware('admin');
-Route::delete('admin/posts/{post}',[AdminPostController::class, 'destory'])->middleware('admin');
+//this is where the middleware for the admin is grouped
+
+Route::middleware('can:admin')->group(function(){
+    Route::get('admin/posts/create',[PostController::class, 'create']);
+    Route::get('admin/posts',[AdminPostController::class, 'index']);
+    Route::post('admin/posts',[PostController::class, 'store']);
+    Route::get('admin/posts/{post}/edit',[AdminPostController::class, 'edit']);
+    Route::patch('admin/posts/{post}',[AdminPostController::class, 'update']);
+    Route::delete('admin/posts/{post}',[AdminPostController::class, 'destory']);
+});
